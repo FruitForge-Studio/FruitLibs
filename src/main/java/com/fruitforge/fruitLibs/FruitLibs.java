@@ -2,13 +2,19 @@ package com.fruitforge.fruitLibs;
 
 import com.fruitforge.fruitLibs.api.config.IConfigManager;
 import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
+import com.fruitforge.fruitLibs.api.item.ItemBuilder;
+import com.fruitforge.fruitLibs.api.item.ItemSerializer;
 import com.fruitforge.fruitLibs.api.messages.IMessageManager;
 import com.fruitforge.fruitLibs.core.config.ConfigManager;
 import com.fruitforge.fruitLibs.core.gui.GUIBuilderImpl;
 import com.fruitforge.fruitLibs.core.gui.GUIListener;
 import com.fruitforge.fruitLibs.core.gui.GUIRegistry;
+import com.fruitforge.fruitLibs.core.item.SimpleItemBuilder;
+import com.fruitforge.fruitLibs.core.item.SimpleItemSerializer;
 import com.fruitforge.fruitLibs.core.logging.LogManager;
 import com.fruitforge.fruitLibs.core.messages.MessageManager;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import revxrsal.zapper.ZapperJavaPlugin;
 
 public final class FruitLibs extends ZapperJavaPlugin {
@@ -18,6 +24,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
     private LogManager logManager;
     private ConfigManager configManager;
     private MessageManager messageManager;
+    private ItemSerializer itemSerializer;
 
     @Override
     public void onEnable() {
@@ -49,6 +56,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
         messageManager = new MessageManager(configManager, logManager);
         logManager.debug("MessageManager initialized");
+
+        itemSerializer = new SimpleItemSerializer();
+        logManager.debug("ItemSerializer initialized");
     }
 
     private void registerListeners() {
@@ -72,7 +82,19 @@ public final class FruitLibs extends ZapperJavaPlugin {
         return logManager;
     }
 
+    public ItemSerializer getItemSerializer() {
+        return itemSerializer;
+    }
+
     public static GUIBuilder createGUI() {
         return new GUIBuilderImpl();
+    }
+
+    public static ItemBuilder createItem(Material material) {
+        return new SimpleItemBuilder(material);
+    }
+
+    public static ItemBuilder createItem(ItemStack item) {
+        return new SimpleItemBuilder(item);
     }
 }
