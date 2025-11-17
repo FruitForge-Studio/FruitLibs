@@ -1,0 +1,16 @@
+version: "1.0.0"
+
+prefix: "<gradient:#00FF00:#00AAFF>[FruitLibs]</gradient>"
+
+errors:
+  general: "{prefix} <red>An error occurred!</red>"
+  no-permission: "{prefix} <red>You don't have permission to do that.</red>"
+  invalid-command: "{prefix} <red>Invalid command usage.</red>"
+
+success:
+  reload: "{prefix} <green>Configuration reloaded successfully!</green>"
+  saved: "{prefix} <green>Data saved successfully!</green>"
+
+info:
+  loading: "{prefix} <cyan>Loading resources...</cyan>"
+  version: "{prefix} <gray>Version: <white>{version}</white></gray>"
