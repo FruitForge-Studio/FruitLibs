@@ -1,9 +1,12 @@
-// src/main/java/com/fruitforge/fruitLibs/FruitLibs.java
 package com.fruitforge.fruitLibs;
 
 import com.fruitforge.fruitLibs.api.config.IConfigManager;
+import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
 import com.fruitforge.fruitLibs.api.messages.IMessageManager;
 import com.fruitforge.fruitLibs.core.config.ConfigManager;
+import com.fruitforge.fruitLibs.core.gui.GUIBuilderImpl;
+import com.fruitforge.fruitLibs.core.gui.GUIListener;
+import com.fruitforge.fruitLibs.core.gui.GUIRegistry;
 import com.fruitforge.fruitLibs.core.logging.LogManager;
 import com.fruitforge.fruitLibs.core.messages.MessageManager;
 import revxrsal.zapper.ZapperJavaPlugin;
@@ -23,6 +26,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
         long startTime = System.currentTimeMillis();
 
         initializeManagers();
+        registerListeners();
 
         long endTime = System.currentTimeMillis();
         logManager.success("FruitLibs v" + getDescription().getVersion() +
@@ -31,6 +35,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     @Override
     public void onDisable() {
+        GUIRegistry.closeAll();
         logManager.info("FruitLibs disabled.");
         instance = null;
     }
@@ -44,6 +49,11 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
         messageManager = new MessageManager(configManager, logManager);
         logManager.debug("MessageManager initialized");
+    }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new GUIListener(), this);
+        logManager.debug("GUIListener registered");
     }
 
     public static FruitLibs getInstance() {
@@ -60,5 +70,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     public LogManager getLogManager() {
         return logManager;
+    }
+
+    public static GUIBuilder createGUI() {
+        return new GUIBuilderImpl();
     }
 }
