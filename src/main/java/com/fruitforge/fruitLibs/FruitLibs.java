@@ -6,6 +6,7 @@ import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemSerializer;
 import com.fruitforge.fruitLibs.api.messages.IMessageManager;
+import com.fruitforge.fruitLibs.api.scheduler.SchedulerBuilder;
 import com.fruitforge.fruitLibs.core.command.CommandRegistry;
 import com.fruitforge.fruitLibs.core.config.ConfigManager;
 import com.fruitforge.fruitLibs.core.database.DatabaseConfig;
@@ -18,6 +19,8 @@ import com.fruitforge.fruitLibs.core.item.SimpleItemBuilder;
 import com.fruitforge.fruitLibs.core.item.SimpleItemSerializer;
 import com.fruitforge.fruitLibs.core.logging.LogManager;
 import com.fruitforge.fruitLibs.core.messages.MessageManager;
+import com.fruitforge.fruitLibs.core.scheduler.SchedulerBuilderImpl;
+import com.fruitforge.fruitLibs.core.scheduler.TaskRegistry;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import revxrsal.zapper.ZapperJavaPlugin;
@@ -31,6 +34,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
     private MessageManager messageManager;
     private ItemSerializer itemSerializer;
     private CommandRegistry commandRegistry;
+    private SchedulerBuilder schedulerBuilder;
 
     @Override
     public void onEnable() {
@@ -48,6 +52,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     @Override
     public void onDisable() {
+        TaskRegistry.cancelAll();
         GUIRegistry.closeAll();
         logManager.info("FruitLibs disabled.");
         instance = null;
@@ -68,6 +73,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
         commandRegistry = new CommandRegistry(this, logManager);
         logManager.debug("CommandRegistry initialized");
+
+        schedulerBuilder = new SchedulerBuilderImpl(this, logManager);
+        logManager.debug("SchedulerBuilder initialized");
     }
 
     private void registerListeners() {
@@ -117,5 +125,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     public static MigrationManager createMigrationManager(Database database) {
         return new MigrationManager(database, getInstance().getLogManager());
+    }
+
+    public static SchedulerBuilder scheduler() {
+        return getInstance().schedulerBuilder;
     }
 }
