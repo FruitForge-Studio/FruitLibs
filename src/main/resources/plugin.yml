@@ -1,5 +1,14 @@
 name: FruitLibs
-version: '${version}'
+version: '1.0-SNAPSHOT'
 main: com.fruitforge.fruitLibs.FruitLibs
 api-version: '1.21'
+load: STARTUP
+authors: [ VyrByte ]
+description: Official Libs for FruitForge Studios
+website: https://fruitforge.com
 
+commands:
+  fruitlibs:
+    description: Main FruitLibs command
+    aliases: [fl]
+    usage: /<command> [subcommand]
