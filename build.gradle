@@ -33,6 +33,13 @@ dependencies {
     implementation "net.kyori:adventure-platform-bukkit:4.4.1"
 
     implementation "de.tr7zw:item-nbt-api:2.15.3"
+
+    implementation "com.zaxxer:HikariCP:7.0.2"
+
+    zap "org.xerial:sqlite-jdbc:3.51.0.0"
+    zap "com.mysql:mysql-connector-j:9.5.0"
+    zap "org.mariadb.jdbc:mariadb-java-client:3.5.3"
+    zap "org.postgresql:postgresql:42.7.8"
 }
 
 zapper {
@@ -83,6 +90,7 @@ shadowJar {
 
     relocate 'net.kyori', 'com.fruitforge.fruitlibs.shaded.kyori'
     relocate 'de.tr7zw.changeme.nbtapi', 'com.fruitforge.fruitlibs.shaded.nbtapi'
+    relocate 'com.zaxxer.hikari', 'com.fruitforge.fruitlibs.shaded.hikari'
 }
 
 build {
