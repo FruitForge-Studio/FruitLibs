@@ -1,4 +1,12 @@
 package com.fruitforge.fruitLibs.api.database;
 
-public class Migration {
+public interface Migration {
+
+    int getVersion();
+
+    String getDescription();
+
+    void up(Database database);
+
+    void down(Database database);
 }
