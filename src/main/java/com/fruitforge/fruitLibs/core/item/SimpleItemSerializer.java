@@ -3,6 +3,7 @@ package com.fruitforge.fruitLibs.core.item;
 import com.fruitforge.fruitLibs.api.item.ItemSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -10,6 +11,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class SimpleItemSerializer implements ItemSerializer {
 
     private static final Gson GSON = new GsonBuilder().create();
+    private static final Type MAP_TYPE = new TypeToken<Map<String, Object>>(){}.getType();
 
     @Override
     public Map<String, Object> serialize(ItemStack item) {
@@ -76,7 +79,7 @@ public class SimpleItemSerializer implements ItemSerializer {
 
     @Override
     public ItemStack fromJson(String json) {
-        Map<String, Object> data = GSON.fromJson(json, Map.class);
+        Map<String, Object> data = GSON.fromJson(json, MAP_TYPE);
         return deserialize(data);
     }
 }
