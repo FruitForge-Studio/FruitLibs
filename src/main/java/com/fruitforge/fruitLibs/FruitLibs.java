@@ -6,6 +6,7 @@ import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemSerializer;
 import com.fruitforge.fruitLibs.api.messages.IMessageManager;
+import com.fruitforge.fruitLibs.core.command.CommandRegistry;
 import com.fruitforge.fruitLibs.core.config.ConfigManager;
 import com.fruitforge.fruitLibs.core.database.DatabaseConfig;
 import com.fruitforge.fruitLibs.core.database.HikariDatabase;
@@ -29,6 +30,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
     private ConfigManager configManager;
     private MessageManager messageManager;
     private ItemSerializer itemSerializer;
+    private CommandRegistry commandRegistry;
 
     @Override
     public void onEnable() {
@@ -63,6 +65,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
         itemSerializer = new SimpleItemSerializer();
         logManager.debug("ItemSerializer initialized");
+
+        commandRegistry = new CommandRegistry(this, logManager);
+        logManager.debug("CommandRegistry initialized");
     }
 
     private void registerListeners() {
@@ -88,6 +93,10 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     public ItemSerializer getItemSerializer() {
         return itemSerializer;
+    }
+
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
     }
 
     public static GUIBuilder createGUI() {
