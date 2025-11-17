@@ -18,15 +18,21 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "codemc"
+        url = "https://repo.codemc.io/repository/maven-public/"
+    }
 }
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT"
 
     implementation "io.github.revxrsal:zapper.api:1.0.3"
-    implementation "net.kyori:adventure-text-minimessage:4.18.0"
-    implementation "net.kyori:adventure-text-serializer-legacy:4.18.0"
-    implementation "net.kyori:adventure-platform-bukkit:4.3.4"
+    implementation "net.kyori:adventure-text-minimessage:4.25.0"
+    implementation "net.kyori:adventure-text-serializer-legacy:4.25.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.4.1"
+
+    implementation "de.tr7zw:item-nbt-api:2.15.3"
 }
 
 zapper {
@@ -76,6 +82,7 @@ shadowJar {
     }
 
     relocate 'net.kyori', 'com.fruitforge.fruitlibs.shaded.kyori'
+    relocate 'de.tr7zw.changeme.nbtapi', 'com.fruitforge.fruitlibs.shaded.nbtapi'
 }
 
 build {
