@@ -1,6 +1,6 @@
 version: "1.0.0"
 
-prefix: "<gradient:#00FF00:#00AAFF>[FruitLibs]</gradient>"
+prefix: "<aqua>Fruit<white>Forge <bold><dark_gray>» </bold> <reset>"
 
 errors:
   general: "{prefix} <red>An error occurred!</red>"
