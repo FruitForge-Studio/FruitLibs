@@ -1,0 +1,5 @@
+name: FruitLibs
+version: '${version}'
+main: com.fruitforge.fruitLibs.FruitLibs
+api-version: '1.21'
+

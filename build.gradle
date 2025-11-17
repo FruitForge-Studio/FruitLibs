@@ -1,0 +1,50 @@
+plugins {
+}
+    }
+        expand props
+    filesMatching('plugin.yml') {
+    filteringCharset 'UTF-8'
+    inputs.properties props
+    def props = [version: version]
+processResources {
+
+}
+    }
+        options.release.set(targetJavaVersion)
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+
+    options.encoding = 'UTF-8'
+tasks.withType(JavaCompile).configureEach {
+
+}
+    }
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    if (JavaVersion.current() < javaVersion) {
+    targetCompatibility = javaVersion
+    sourceCompatibility = javaVersion
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+java {
+def targetJavaVersion = 21
+
+}
+    compileOnly "org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT"
+dependencies {
+
+}
+    }
+        url = "https://oss.sonatype.org/content/groups/public/"
+        name = "sonatype"
+    maven {
+    }
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        name = "spigotmc-repo"
+    maven {
+    mavenCentral()
+repositories {
+
+version = '1.0-SNAPSHOT'
+group = 'com.fruitforge'
+
+}
+    id 'java'
+
