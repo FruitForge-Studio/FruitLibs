@@ -4,6 +4,7 @@ import com.fruitforge.fruitLibs.api.item.ItemBuilder;
 import com.fruitforge.fruitLibs.util.ColorUtil;
 import de.tr7zw.changeme.nbtapi.NBT;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -167,7 +168,8 @@ public class SimpleItemBuilder implements ItemBuilder {
         }
 
         if (meta instanceof SkullMeta skullMeta) {
-            skullMeta.setOwner(playerName);
+            UUID playerUUID = getPlayerUUID(playerName);
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerUUID));
             this.meta = skullMeta;
         }
 
@@ -227,5 +229,9 @@ public class SimpleItemBuilder implements ItemBuilder {
     @Override
     public ItemBuilder clone() {
         return new SimpleItemBuilder(build());
+    }
+
+    private UUID getPlayerUUID(String playerName) {
+        return UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes());
     }
 }
