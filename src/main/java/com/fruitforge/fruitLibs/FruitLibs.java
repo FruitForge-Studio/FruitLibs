@@ -1,11 +1,15 @@
 package com.fruitforge.fruitLibs;
 
 import com.fruitforge.fruitLibs.api.config.IConfigManager;
+import com.fruitforge.fruitLibs.api.database.Database;
 import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemSerializer;
 import com.fruitforge.fruitLibs.api.messages.IMessageManager;
 import com.fruitforge.fruitLibs.core.config.ConfigManager;
+import com.fruitforge.fruitLibs.core.database.DatabaseConfig;
+import com.fruitforge.fruitLibs.core.database.HikariDatabase;
+import com.fruitforge.fruitLibs.core.database.MigrationManager;
 import com.fruitforge.fruitLibs.core.gui.GUIBuilderImpl;
 import com.fruitforge.fruitLibs.core.gui.GUIListener;
 import com.fruitforge.fruitLibs.core.gui.GUIRegistry;
@@ -96,5 +100,13 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     public static ItemBuilder createItem(ItemStack item) {
         return new SimpleItemBuilder(item);
+    }
+
+    public static Database createDatabase(DatabaseConfig config) {
+        return new HikariDatabase(config, getInstance().getLogManager());
+    }
+
+    public static MigrationManager createMigrationManager(Database database) {
+        return new MigrationManager(database, getInstance().getLogManager());
     }
 }
