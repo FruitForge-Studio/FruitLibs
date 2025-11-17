@@ -1,18 +1,29 @@
 package com.fruitforge.fruitLibs;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.zapper.ZapperJavaPlugin;
 
-public final class FruitLibs extends JavaPlugin {
+public final class FruitLibs extends ZapperJavaPlugin {
+
+    private static FruitLibs instance;
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        instance = this;
 
+        long startTime = System.currentTimeMillis();
+        getLogger().info("Initializing FruitLibs v" + getDescription().getVersion());
+
+        long endTime = System.currentTimeMillis();
+        getLogger().info("FruitLibs loaded successfully in " + (endTime - startTime) + "ms");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getLogger().info("FruitLibs disabled.");
+        instance = null;
+    }
+
+    public static FruitLibs getInstance() {
+        return instance;
     }
 }
-
