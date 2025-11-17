@@ -2,6 +2,7 @@ package com.fruitforge.fruitLibs;
 
 import com.fruitforge.fruitLibs.api.config.IConfigManager;
 import com.fruitforge.fruitLibs.api.database.Database;
+import com.fruitforge.fruitLibs.api.event.EventBus;
 import com.fruitforge.fruitLibs.api.gui.GUIBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemBuilder;
 import com.fruitforge.fruitLibs.api.item.ItemSerializer;
@@ -12,6 +13,7 @@ import com.fruitforge.fruitLibs.core.config.ConfigManager;
 import com.fruitforge.fruitLibs.core.database.DatabaseConfig;
 import com.fruitforge.fruitLibs.core.database.HikariDatabase;
 import com.fruitforge.fruitLibs.core.database.MigrationManager;
+import com.fruitforge.fruitLibs.core.event.SimpleEventBus;
 import com.fruitforge.fruitLibs.core.gui.GUIBuilderImpl;
 import com.fruitforge.fruitLibs.core.gui.GUIListener;
 import com.fruitforge.fruitLibs.core.gui.GUIRegistry;
@@ -35,6 +37,7 @@ public final class FruitLibs extends ZapperJavaPlugin {
     private ItemSerializer itemSerializer;
     private CommandRegistry commandRegistry;
     private SchedulerBuilder schedulerBuilder;
+    private EventBus eventBus;
 
     @Override
     public void onEnable() {
@@ -52,6 +55,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     @Override
     public void onDisable() {
+        if (eventBus != null) {
+            eventBus.unregisterAll();
+        }
         TaskRegistry.cancelAll();
         GUIRegistry.closeAll();
         logManager.info("FruitLibs disabled.");
@@ -76,6 +82,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
         schedulerBuilder = new SchedulerBuilderImpl(this, logManager);
         logManager.debug("SchedulerBuilder initialized");
+
+        eventBus = new SimpleEventBus(logManager);
+        logManager.debug("EventBus initialized");
     }
 
     private void registerListeners() {
@@ -129,5 +138,9 @@ public final class FruitLibs extends ZapperJavaPlugin {
 
     public static SchedulerBuilder scheduler() {
         return getInstance().schedulerBuilder;
+    }
+
+    public static EventBus eventBus() {
+        return getInstance().eventBus;
     }
 }
